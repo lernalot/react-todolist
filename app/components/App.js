@@ -72,21 +72,9 @@ class App extends React.Component{
         });
         message.success('删除成功！');
     }
-    //用filter筛选出没有被勾选的todos元素，然后setstate重新渲染
-    // clearDone(){
-    //     let todos = todos = this.state.todos.filter(todo >= !todos.isDone);
-    //     this.setState({
-    //         todos: todos
-    //     });
-    // }
     //修改，通过弹窗，获取list内容，然后修改之后setstate
     reviseTodo(todo,index,timeId){
         this.refs.modal.showModal(todo,index,timeId);
-    }
-    //changeTodoStatus函数里处理了所有被勾选的数组元素，赋值isdone为isdone；
-    changeTodoState(index,isDone){
-        this.state.todos[index].isDone = isDone;
-        this.isAllChecked();
     }
     closeDialog(){
         document.getElementById('reviseinput').value = '';
@@ -149,7 +137,7 @@ class App extends React.Component{
             <Card className="pannel">
                 <TodoHeader addTodo={this.addTodo.bind(this)} todos={this.state.todos} showAll={this.showAll.bind(this)} />
                 <TodoQuery ref="query" todos={this.state.todos} queryList={this.queryList.bind(this)} />
-                <TodoMain todos={this.state.todos}  changeTodoState={this.changeTodoState.bind(this)} deleteTodo={this.deleteTodo.bind(this)} reviseTodo={this.reviseTodo.bind(this)}/>
+                <TodoMain todos={this.state.todos}  deleteTodo={this.deleteTodo.bind(this)} reviseTodo={this.reviseTodo.bind(this)}/>
                 <TodoRevise ref="modal" todos={this.state.todos} closeDialog={this.closeDialog.bind(this)} reviseContent={this.reviseContent.bind(this)}/>
             </Card>
         )
