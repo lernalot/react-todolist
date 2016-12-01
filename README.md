@@ -28,7 +28,7 @@
 -  接下来看增加的渲染操作addTodo方法
 
 
-	```
+	```javascript
 	addTodo(todoItem){
 		if(!this.db.get('todos')){
 		   this.db.set('todos',[]);
@@ -49,7 +49,7 @@
 		}
 	```
 
-	
+
 1. 从代码可以看出this.db代表数据库的操作，set保存，get取值，todoItem是从增加组件传过来的input的值，这里负责入栈操作，并把最新的数组渲染出来。
 
 - 删除操作deleteTodo
