@@ -107,52 +107,58 @@
 		});
 		// message.success('修改成功！');
 		document.getElementById('reviseinput').value = '';
-	} ```
+	}
+	```
+
 1. 修改方法也是从数据库找到指定的数据，数据库修改之后，显示当前this.state.todos。
 2. 这里的lastReviseTime是最后一次修改时间，通过修改组件传入。
 
 
 - 查询方法queryList：
+
 ```javascript
 - queryList(queryArr){
-	        message.config({
-	            top:48,
-	            duration:1
-	        });
-	        if(this.state.todos.length == this.db.get('todos').length && queryArr.length == 0){
-	            message.warning('查询内容不存在');
-	            return;
-	        }
-	        if(queryArr.length == 0){
-	            message.warning('当前list不存在查询内容，已为您转到全部list');
-	            this.setState({
-	                todos:this.db.get('todos')
-	            });
-	        }else{
-	                this.setState({
-	                todos:queryArr
-	            });
-	        }     
-	    }
+        message.config({
+            top:48,
+            duration:1
+        });
+        if(this.state.todos.length == this.db.get('todos').length && queryArr.length == 0){
+            message.warning('查询内容不存在');
+            return;
+        }
+        if(queryArr.length == 0){
+            message.warning('当前list不存在查询内容，已为您转到全部list');
+            this.setState({
+                todos:this.db.get('todos')
+            });
+        }else{
+                this.setState({
+                todos:queryArr
+            });
+        }     
+    }
 ``` 
+
 1. queryArr是查询后得到的数组，通过查询组件传过来，查询的基本原理就是从当前list遍历（因为可能存在查询之后再查询操作，再查询的时候，app对数据库做了修改，但TodoQuery的数据库信息不会实时同步，但是this.state.todos会同步，所以根据当前list做查询，如果当前list查不到内容而且list长度和数据库长度不同，就重新渲染一遍this.state.todos，然后让用户再查询），查询思想就是判断查询的str是否出现在数组的元素里，通过indexOf方法判断索引是否大于-1即可。
 ###TodoMain组件：
 ```javascript
 - return (
-	            <ul className="todo-list">
-	                {this.props.todos.map((todo, index) => {
-	                    //return <li style={listStyle}>{this.props.todos[index].text}</li>
-	                    return <TodoItem key={index} text={todo.text} isDone={todo.isDone} lastReviseTime={todo.lastReviseTime} timeId={todo.timeId} index={index} {...this.props} />
-	                    //return <TodoItem key={index} {...todo} index={index} {...this.props}/>
-	                    //map对数组进行了遍历，todo表示每一个数组元素text，index代表索引，所以让todoitem渲染的过程是一个循环的渲染过程，每次渲染不一样，是动态组件渲染
-	                    //作为动态组件，需要一个key，每次渲染的时候key不同，才会显示不同的渲染，是一个表示的渲染
-	                })}
-	            </ul>
-	        )
-	        ```
+        <ul className="todo-list">
+            {this.props.todos.map((todo, index) => {
+                //return <li style={listStyle}>{this.props.todos[index].text}</li>
+                return <TodoItem key={index} text={todo.text} isDone={todo.isDone} lastReviseTime={todo.lastReviseTime} timeId={todo.timeId} index={index} {...this.props} />
+                //return <TodoItem key={index} {...todo} index={index} {...this.props}/>
+                //map对数组进行了遍历，todo表示每一个数组元素text，index代表索引，所以让todoitem渲染的过程是一个循环的渲染过程，每次渲染不一样，是动态组件渲染
+                //作为动态组件，需要一个key，每次渲染的时候key不同，才会显示不同的渲染，是一个表示的渲染
+            })}
+        </ul>
+    )
+    ```
+
 1. 使用map对数据进行遍历渲染，注意spread操作符，{…todo},{...props},spread操作符把props，todos的属性和方法传递到子组件TodoItem。
 2. 这里是一个循环，所以return的TodoItem组件是一个动态组件，根据react组件的动态机制，需要在todoItem组件里设置一个key，并要保证每次key的值都不一样，也就是渲染的列表的，渲染是对this.state.todos的渲染，列表每一项都有不同的index，所以取值key={index}。
 ###TodoItem组件
+
 ```javascript
 - export default class TodoItem extends React.Component{
 	    constructor(){
@@ -201,10 +207,13 @@
 	    }
 	}
 ```
+
+
 1. React.findDOMNode(this)可以获取当前这个组件标签。
 2. 在元素中定义ref=xxx属性，就可以通过React.findDOMNode(this.refs.xxx)获取到这个元素。
 3. 给元素定义class类名的时候要使用className，这里最后修改时间是从修改组件传过来的，TodoItem和TodoRevise没有通信关系，TodoRevise把数据传到app，然后下发到TodoItem显示。（是否有其他方式解决互不相干（兄弟节点或者其他）的组件之间的通信关系？）
 ###TodoRevise组件
+
 ```javascript
 - class TodoRevise extends React.Component {
 	    constructor(){
@@ -255,8 +264,10 @@
 	        )
 	    }
 	}
-	```
 	export default TodoRevise;
+	```
+
+	
 1. 这里modal是ant-design的一个组件，自带了handOk，show modal，handleCancel方法，修改的显示隐藏就是通过更改this,state.visible(boolean)来决定的，监听确定按钮点击事件和回车键输入事件来执行把修改的对象传给app进行数据库查询找到被修改的对象，并赋值新的修改的内容（由参数传递过来）。
 ###总结与思考
 ####react渲染性能优点：
