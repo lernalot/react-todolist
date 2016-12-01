@@ -1,0 +1,126 @@
+body{
+    background: #f5f5f5;
+}
+
+
+h1{
+        text-align: center;
+        text-decoration: underline;
+    }
+
+.container{
+    width: 560px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.clearfix:after{
+    content: "";
+    display: table;
+    height: 0;
+    clear: both;
+}
+
+.panel{
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 8px;
+    box-shadow: 1px 1px 1px #000;
+}
+.todo-list{
+    list-style: none;
+    padding: 0;
+}
+.todo-list li{
+        border-bottom: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        padding: 10px;
+        font-size: 18px;
+    }
+.todo-list li  input[type=checkbox]{
+            margin-right: 10px;
+        }
+.todo-list li button{
+            font-size: 14px;
+        }
+.todo-footer{
+    margin-left: 10px;
+}
+.todo-footer input[type=checkbox]{
+        margin-right: 10px;
+    }
+.add-button{
+    position: absolute;
+    top: 85px;
+    right: 24px;
+}
+.todo-list{
+    margin-top: 34px;
+    border-top: 1px solid #ddd;
+}
+.change{
+    float: right;
+    margin-right: 10px;
+}
+.laertme{
+    position: absolute;
+    top: 0px;
+    left: 30%;
+}
+.panel-header{
+    margin-top: 30px;
+}
+.deleteAll{
+    margin-top: 10px;
+}
+.revise_content{
+    color: #57c5f7;
+}
+.ant-modal-content p{
+    font-size: 16px;
+    cursor : pointer;
+}
+.listContent{
+    text-overflow:ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 290px;
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    top: 6px;
+}
+.query-button{
+    position: absolute;
+    top: 85px;
+    right: 95px;
+}
+.show-all{
+    position: absolute;
+    top: 85px;
+    right: 165px;
+}
+.todo-list li{
+    position: relative;
+}
+.product-time{
+    font-size: 10px;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    color: #7f948a;
+}
+.revise-time{
+    font-size: 10px;
+    position: absolute;
+    top: 0;
+    left: 180px; 
+    color: #7f948a;
+}
