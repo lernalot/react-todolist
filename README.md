@@ -26,6 +26,8 @@
 1. 其中card是从antd引入的一个api，antd是一个view层的框架，提供了一些ui组件可以使用。
 2. 引入的组件分别为增加组件，查询组件，渲染组件（子组件删除），修改组件。
 -  接下来看增加的渲染操作addTodo方法
+
+
 	```
 	addTodo(todoItem){
 		if(!this.db.get('todos')){
@@ -46,6 +48,8 @@
 		message.success('增加成功！');
 		}
 	```
+
+	
 1. 从代码可以看出this.db代表数据库的操作，set保存，get取值，todoItem是从增加组件传过来的input的值，这里负责入栈操作，并把最新的数组渲染出来。
 
 - 删除操作deleteTodo
