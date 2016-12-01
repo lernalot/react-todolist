@@ -26,7 +26,7 @@
 1. 其中card是从antd引入的一个api，antd是一个view层的框架，提供了一些ui组件可以使用。
 2. 引入的组件分别为增加组件，查询组件，渲染组件（子组件删除），修改组件。
 -  接下来看增加的渲染操作addTodo方法
-	```javascript
+	```
 	addTodo(todoItem){
 		if(!this.db.get('todos')){
 		   this.db.set('todos',[]);
