@@ -141,6 +141,7 @@
 
 1. queryArr是查询后得到的数组，通过查询组件传过来，查询的基本原理就是从当前list遍历（因为可能存在查询之后再查询操作，再查询的时候，app对数据库做了修改，但TodoQuery的数据库信息不会实时同步，但是this.state.todos会同步，所以根据当前list做查询，如果当前list查不到内容而且list长度和数据库长度不同，就重新渲染一遍this.state.todos，然后让用户再查询），查询思想就是判断查询的str是否出现在数组的元素里，通过indexOf方法判断索引是否大于-1即可。
 ###TodoMain组件：
+
 ```javascript
 - return (
         <ul className="todo-list">
@@ -153,7 +154,7 @@
             })}
         </ul>
     )
-    ```
+```
 
 1. 使用map对数据进行遍历渲染，注意spread操作符，{…todo},{...props},spread操作符把props，todos的属性和方法传递到子组件TodoItem。
 2. 这里是一个循环，所以return的TodoItem组件是一个动态组件，根据react组件的动态机制，需要在todoItem组件里设置一个key，并要保证每次key的值都不一样，也就是渲染的列表的，渲染是对this.state.todos的渲染，列表每一项都有不同的index，所以取值key={index}。
@@ -265,9 +266,9 @@
 	    }
 	}
 	export default TodoRevise;
-	```
+```
 
-	
+
 1. 这里modal是ant-design的一个组件，自带了handOk，show modal，handleCancel方法，修改的显示隐藏就是通过更改this,state.visible(boolean)来决定的，监听确定按钮点击事件和回车键输入事件来执行把修改的对象传给app进行数据库查询找到被修改的对象，并赋值新的修改的内容（由参数传递过来）。
 ###总结与思考
 ####react渲染性能优点：
@@ -280,7 +281,7 @@
 		var ulRoot = ul.render()
 		document.body.appendChild(ulRoot)
 	也就是react中：
-	`ReactDOM.render(<App/>,document.getElementById('ulRoot'));
+	ReactDOM.render(<App/>,document.getElementById('ulRoot'));
 	```
 	来逐层计算子节点，然后把子节点抛到根节点（ulRoot）下。
 	2. js内比较修改后新的虚拟dom树和原来的旧的虚拟dom树，diff算法：
