@@ -25,7 +25,7 @@
 				<TodoRevise ref="modal" todos={this.state.todos} closeDialog={this.closeDialog.bind(this)} reviseContent={this.reviseContent.bind(this)}/>
 			</Card>
 		)
-		}
+	}
 	```
 1. 其中card是从antd引入的一个api，antd是一个view层的框架，提供了一些ui组件可以使用。
 2. 引入的组件分别为增加组件，查询组件，渲染组件（子组件删除），修改组件。
@@ -62,24 +62,24 @@
 	deleteTodo(timeId){
 		let i =0;
 		for(i=0;i<this.db.get('todos').length;i++){
-		if(this.db.get('todos')[i].timeId == timeId){
-		this.db.get('todos').splice(i,1);
-		}
+			if(this.db.get('todos')[i].timeId == timeId){
+				this.db.get('todos').splice(i,1);
+			}
 		}
 		this.state.todos.map((todo,index) => {
-		console.log(todo);
-		if(todo.timeId == timeId){
-		this.state.todos.splice(index,1);
-		}
+			console.log(todo);
+			if(todo.timeId == timeId){
+				this.state.todos.splice(index,1);
+			}
 		});
 		this.setState({todos:this.state.todos});
 		this.db.set('todos',this.db.get('todos'));
 		message.config({
-		top:48,
-		duration:1
+			top:48,
+			duration:1
 		});
 		message.success('删除成功！');
-		}
+	}
 	```
 1. timeId是每一个li生成的时间戳，他是唯一的，删除组件传过来时间戳之后，遍历数据库，找到li，数组删除这个元素。
 2. 值得注意的，这里相比增加方法的setState，这里渲染的是this.state.todos，而不是对数据库的渲染，主要是考虑到查询之后当前list有可能为一部分的数组，用户希望是在当前查询到的list删除和显示，所以就渲染了this.state.todos，但之后对数据库进行删除操作，才是真正的对数据做了修改。
@@ -140,6 +140,8 @@
 ``` 
 
 1. queryArr是查询后得到的数组，通过查询组件传过来，查询的基本原理就是从当前list遍历（因为可能存在查询之后再查询操作，再查询的时候，app对数据库做了修改，但TodoQuery的数据库信息不会实时同步，但是this.state.todos会同步，所以根据当前list做查询，如果当前list查不到内容而且list长度和数据库长度不同，就重新渲染一遍this.state.todos，然后让用户再查询），查询思想就是判断查询的str是否出现在数组的元素里，通过indexOf方法判断索引是否大于-1即可。
+
+
 ###TodoMain组件：
 
 ```javascript
@@ -158,6 +160,8 @@
 
 1. 使用map对数据进行遍历渲染，注意spread操作符，{…todo},{...props},spread操作符把props，todos的属性和方法传递到子组件TodoItem。
 2. 这里是一个循环，所以return的TodoItem组件是一个动态组件，根据react组件的动态机制，需要在todoItem组件里设置一个key，并要保证每次key的值都不一样，也就是渲染的列表的，渲染是对this.state.todos的渲染，列表每一项都有不同的index，所以取值key={index}。
+
+
 ###TodoItem组件
 
 ```javascript
@@ -213,6 +217,8 @@
 1. React.findDOMNode(this)可以获取当前这个组件标签。
 2. 在元素中定义ref=xxx属性，就可以通过React.findDOMNode(this.refs.xxx)获取到这个元素。
 3. 给元素定义class类名的时候要使用className，这里最后修改时间是从修改组件传过来的，TodoItem和TodoRevise没有通信关系，TodoRevise把数据传到app，然后下发到TodoItem显示。（是否有其他方式解决互不相干（兄弟节点或者其他）的组件之间的通信关系？）
+
+
 ###TodoRevise组件
 
 ```javascript
@@ -270,7 +276,11 @@
 
 
 1. 这里modal是ant-design的一个组件，自带了handOk，show modal，handleCancel方法，修改的显示隐藏就是通过更改this,state.visible(boolean)来决定的，监听确定按钮点击事件和回车键输入事件来执行把修改的对象传给app进行数据库查询找到被修改的对象，并赋值新的修改的内容（由参数传递过来）。
+
+
 ###总结与思考
+
+
 ####react渲染性能优点：
 - react不直接操作dom，将DOM结构存储在内存中，然后同render()的返回内容进行比较，计算出需要改动的地方，最后才反映到DOM中。
 - react使用虚拟节点，通过js创建dom节点对象。
@@ -295,6 +305,8 @@
 	每种操作对应一个对象，不同的差异把差异作为对象属性存储到数组里。
 	4. 遍历dom树，从存储差异的数组里获得index，然后对dom树的节点数组进行差异操作，差异操作会根据差异数组的对象类型，执行不同的操作，替换删除等等。
 - react对变化是一个存储然后批处理的过程，仅对变化的dom进行批处理。（批处理机制？）
+
+
 ####react使用
 1. 组件规划：明确需求功能，明确功能对应的组件之间的关系。
 	- 对于兄弟节点又没有相互引用，由于react单向数据传输机制，项目里使用的是使用this.props.deleteTodo(para1,para2)，将参数从子组件传到父组件，然后由父组件记录到this.state.todos,再传递到其他组件。
